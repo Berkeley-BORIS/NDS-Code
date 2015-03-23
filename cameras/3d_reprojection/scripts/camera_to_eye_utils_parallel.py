@@ -29,7 +29,7 @@ def find_pts_near_fovea(coords):
 def make_destination_directory_tree(dst_dir):
     '''makes a directory tree for results of reprojection
     '''
-    os.mkdir(dst_dir)
+    os.makedirs(dst_dir)
     os.mkdir(dst_dir + 'lefteye/')
     os.mkdir(dst_dir + 'righteye/')
     os.mkdir(dst_dir + 'cycloeye/')

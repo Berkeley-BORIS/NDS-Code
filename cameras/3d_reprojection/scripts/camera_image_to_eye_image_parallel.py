@@ -10,15 +10,15 @@ import camera_to_eye_utils_parallel
 import pp
 import matplotlib.pyplot
 
-EXTERNAL_OUTPUT_ROOT_DPATH = "/Volumes/Raw Data Backup/TEST_RENDER_OUTPUT"
-EXTERNAL_INPUT_ROOT_DPATH = "/Volumes/Processed Data Extension"
 
 def camera_image_to_eye_image(subj,transform_src_file,fixation_src_file,ipd_cm,frames,targets,drift,parallel_input, fixed_fixations=''):
 	'''transforms left camera image into left and right eye images
 	'''
 
+	EXTERNAL_INPUT_ROOT_DPATH = "/Volumes/Processed Data Extension"
+	EXTERNAL_OUTPUT_ROOT_DPATH = "/Volumes/Raw Data Backup/TEST_RENDER_OUTPUT"
 	fixation_src_file = os.path.join(EXTERNAL_OUTPUT_ROOT_DPATH, '..', 'for imac', 'eyes',
-							'data_processing', 'data', subj, subj+'_fixation_pints'+fixed_fixations+'.mat')
+							'data_processing', 'data', subj, subj+'_fixation_points'+fixed_fixations+'.mat')
 	transform_src_file = os.path.join(EXTERNAL_INPUT_ROOT_DPATH, 'camera_registration', 'data',
 							subj, subj + '_transform_1.npz')
 	fixation_src_mat = parallel_input
@@ -27,21 +27,21 @@ def camera_image_to_eye_image(subj,transform_src_file,fixation_src_file,ipd_cm,f
 		fixed_fixations = '_'+fixed_fixations
 
 	dst_dir = os.path.join(EXTERNAL_OUTPUT_ROOT_DPATH, subj+fixed_fixations,
-					subj + '_' + fixation_src_mat + '_eye_images_transform' + transform_src_file.split('_')[3].strip('.npz'))
+					subj + '_' + fixation_src_mat + '_eye_images_transform' + transform_src_file.split('_')[3].strip('.npz')) + '/'
 
 	# Normal source directory operation
 	if targets == 1:
 		dst_dir = '/Volumes/Macintosh HD 2/cameras2/3d_reprojection' + dst_dir[2:]  # put targets directly on second HD
 		depth_src_dir = '/Volumes/Macintosh HD 2/cameras2/disparity_estimation/data/' + subj + '/' + subj + '_' + fixation_src_mat + '_disparity_maps/three_d_denoised/'
 	else:
-		depth_src_dir = os.path.join(EXTERNAL_INPUT_ROOT_DPATH, 'disparity_estimation', 'data',
-						subj + '_' + fixation_src_mat + '_disparity_maps', 'three_d_denoised')
+		depth_src_dir = os.path.join(EXTERNAL_INPUT_ROOT_DPATH, 'disparity_estimation', 'data', subj,
+						subj + '_' + fixation_src_mat + '_disparity_maps', 'three_d_denoised') + '/'
 
 	if targets == 1:
 		image_src_dir = '/Volumes/Macintosh HD 2/cameras2/image_rectification/data/' + subj + '/' + subj + '_' + fixation_src_mat + '_frames_rect/'
 	else:
 		image_src_dir = os.path.join(EXTERNAL_INPUT_ROOT_DPATH, 'image_rectification', 'data', subj,
-							subj + '_' + fixation_src_mat + '_frames_rect')
+							subj + '_' + fixation_src_mat + '_frames_rect') + '/'
 
 	#create destination directory if it doesn't exist
 	if not os.path.exists(string.join(string.split(dst_dir,'/')[0:-2],'/')):
