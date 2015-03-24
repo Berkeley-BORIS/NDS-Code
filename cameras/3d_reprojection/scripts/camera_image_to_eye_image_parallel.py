@@ -252,6 +252,7 @@ def camera_image_to_eye_image(subj,transform_src_file,fixation_src_file,ipd_cm,f
 
 				if numpy.isnan(fixation_point_le).any():
 					no_depth_at_cyclo += 1
+					frame_cnt += 1
 					continue
 				# proceed as usual
 
