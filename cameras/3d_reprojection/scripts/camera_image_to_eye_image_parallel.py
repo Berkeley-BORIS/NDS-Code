@@ -17,14 +17,16 @@ def camera_image_to_eye_image(subj,transform_src_file,fixation_src_file,ipd_cm,f
 
 	EXTERNAL_INPUT_ROOT_DPATH = "/Volumes/Processed Data Extension"
 	EXTERNAL_OUTPUT_ROOT_DPATH = "/Volumes/Raw Data Backup/TEST_RENDER_OUTPUT"
-	fixation_src_file = os.path.join(EXTERNAL_OUTPUT_ROOT_DPATH, '..', 'for imac', 'eyes',
-							'data_processing', 'data', subj, subj+'_fixation_points'+fixed_fixations+'.mat')
+
 	transform_src_file = os.path.join(EXTERNAL_INPUT_ROOT_DPATH, 'camera_registration', 'data',
 							subj, subj + '_transform_1.npz')
 	fixation_src_mat = parallel_input
 
 	if fixed_fixations and not fixed_fixations.startswith('_'):
 		fixed_fixations = '_'+fixed_fixations
+
+	fixation_src_file = os.path.join(EXTERNAL_OUTPUT_ROOT_DPATH, '..', 'for imac', 'eyes',
+							'data_processing', 'data', subj, subj+'_fixation_points'+fixed_fixations+'.mat')
 
 	dst_dir = os.path.join(EXTERNAL_OUTPUT_ROOT_DPATH, subj+fixed_fixations,
 					subj + '_' + fixation_src_mat + '_eye_images_transform' + transform_src_file.split('_')[3].strip('.npz')) + '/'
